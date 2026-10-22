@@ -3,4 +3,4 @@ Allow: /
 Disallow: /app
 
 # Replace with your real domain after deploying
-Sitemap: https://YOUR-SITE.vercel.app/sitemap.xml
+Sitemap: https://gen-ai-puce-one.vercel.app/sitemap.xml
