@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api, { errMsg } from "../api/axios";
+import { useDialog } from "../components/Dialog";
 import useSeo from "../hooks/useSeo";
 import { btn, btnLine, eyebrow, glass, sm } from "../utils/ui";
 
@@ -13,6 +14,7 @@ export default function ResumeListPage() {
   });
 
   const nav = useNavigate();
+  const dialog = useDialog();
   const [resumes, setResumes] = useState(null);
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
@@ -53,7 +55,15 @@ export default function ResumeListPage() {
   };
 
   const remove = async (r) => {
-    if (!window.confirm(`Delete "${r.title}"? This cannot be undone.`)) return;
+    if (
+      !(await dialog.confirm({
+        title: "Delete this resume?",
+        message: `"${r.title}" will be deleted. This cannot be undone.`,
+        confirmText: "Delete",
+        danger: true,
+      }))
+    )
+      return;
     setBusy(r._id);
     setError("");
     try {

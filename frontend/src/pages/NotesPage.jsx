@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import api, { errMsg } from "../api/axios";
 import { useSpeech, canSpeak } from "../hooks/useSpeech";
 import ChatPanel from "../components/ChatPanel";
+import { useDialog } from "../components/Dialog";
 import useSeo from "../hooks/useSeo";
 import {
   btn,
@@ -141,6 +142,7 @@ function NoteWorkspace({ note, onChange, onEdit, onDelete, onUsage }) {
   const [stale, setStale] = useState(false); // summary is older than the note text
   const [quizzes, setQuizzes] = useState(null); // saved quizzes of this note
   const { activeId, speak, stop } = useSpeech();
+  const dialog = useDialog();
 
   const loadCards = useCallback(
     () =>
@@ -191,18 +193,36 @@ function NoteWorkspace({ note, onChange, onEdit, onDelete, onUsage }) {
       }
       onUsage();
     });
-  const clearCards = () => {
-    if (!window.confirm("Delete all flashcards of this note?")) return;
+  const clearCards = async () => {
+    if (
+      !(await dialog.confirm({
+        title: "Delete all flashcards?",
+        message: "Every flashcard of this note will be deleted.",
+        confirmText: "Delete all",
+        danger: true,
+      }))
+    )
+      return;
     run("clear", async () => {
       await api.delete(`/notes/${note._id}/flashcards`);
       setCards([]);
     });
   };
-  const del = () =>
+  const del = async () => {
+    if (
+      !(await dialog.confirm({
+        title: "Delete this note?",
+        message: `"${note.title}", its flashcards and quizzes will be deleted. This cannot be undone.`,
+        confirmText: "Delete",
+        danger: true,
+      }))
+    )
+      return;
     run("delete", async () => {
       await api.delete(`/notes/${note._id}`);
       onDelete(note._id);
     });
+  };
 
   const startEdit = () => {
     setForm({

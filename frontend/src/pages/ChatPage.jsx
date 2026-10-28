@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import api, { errMsg } from "../api/axios";
 import Markdown from "../components/Markdown";
+import { useDialog } from "../components/Dialog";
 import useSeo from "../hooks/useSeo";
 import { useSpeech, canListen, canSpeak } from "../hooks/useSpeech";
 import { btn, btnLine, eyebrow, panel, segBtn } from "../utils/ui";
@@ -33,6 +34,7 @@ export default function ChatPage() {
     noindex: true,
   });
 
+  const dialog = useDialog();
   const [chats, setChats] = useState([]);
   const [activeId, setActiveId] = useState(null); // null = a new chat that is not saved yet
   const [messages, setMessages] = useState([]);
@@ -170,7 +172,13 @@ export default function ChatPage() {
   };
 
   const rename = async (chat) => {
-    const title = window.prompt("Rename chat", chat.title)?.trim();
+    const title = await dialog.prompt({
+      title: "Rename chat",
+      label: "Chat name",
+      defaultValue: chat.title,
+      maxLength: 80,
+      confirmText: "Save",
+    });
     if (!title || title === chat.title) return;
     try {
       await api.patch(`/chats/${chat._id}`, { title });
@@ -181,7 +189,15 @@ export default function ChatPage() {
   };
 
   const remove = async (chat) => {
-    if (!window.confirm(`Delete "${chat.title}"?`)) return;
+    if (
+      !(await dialog.confirm({
+        title: "Delete this chat?",
+        message: `"${chat.title}" and all its messages will be deleted. This cannot be undone.`,
+        confirmText: "Delete",
+        danger: true,
+      }))
+    )
+      return;
     try {
       await api.delete(`/chats/${chat._id}`);
       setChats((l) => l.filter((c) => c._id !== chat._id));

@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #faf9f5;
-  --color-mute: #b0aea5;
-  --color-clay: #d97757;
-  --color-clay-hi: #f0a98a;
-  --color-sky: #6a9bcc;
-  --color-moss: #8fa86f;
-  --color-danger: #ff8a8a;
+  --color-ink: #ffffff;
+  --color-mute: #a3a3a3;
+  --color-clay: #ffffff; /* the main accent is now plain white */
+  --color-clay-hi: #e5e5e5;
+  --color-sky: #a3a3a3;
+  --color-moss: #737373;
+  --color-danger: #ff6b6b;
 
-  /* Older components still use these names, so they point at the new palette */
-  --color-cya: #f0a98a;
-  --color-vio: #d97757;
-  --color-pnk: #ff8a8a;
-  --color-amb: #e8c07a;
-  --color-ok: #8fa86f;
+  /* names used by older components, now pointing at the black / grey / white palette */
+  --color-cya: #e5e5e5;
+  --color-vio: #ffffff;
+  --color-pnk: #ff6b6b;
+  --color-amb: #d4d4d4;
+  --color-ok: #6fdc8c;
 
-  --font-display: Newsreader, Georgia, serif;
-  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Space Grotesk", Inter, sans-serif;
+  --font-sans: Inter, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -37,23 +37,26 @@ body {
   background:
     radial-gradient(
       900px 600px at 82% -8%,
-      rgba(217, 119, 87, 0.17),
+      rgba(255, 255, 255, 0.07),
       transparent 60%
     ),
-    radial-gradient(
-      800px 600px at -8% 108%,
-      rgba(106, 155, 204, 0.12),
-      transparent 60%
-    ),
-    #171615;
+    #000;
   background-attachment: fixed;
 }
 ::selection {
-  background: rgba(217, 119, 87, 0.45);
+  background: #fff;
+  color: #000;
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(250, 249, 245, 0.18) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+/* every corner is square: buttons, cards, inputs, dialogs */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
 }
 
 /* fine film grain over everything */
@@ -99,7 +102,7 @@ body::after {
   }
 }
 .pop {
-  animation: pop 0.45s var(--ease-smooth);
+  animation: pop 0.35s var(--ease-smooth);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -118,6 +121,7 @@ body::after {
   }
 }
 
+/* maths from the AI chat */
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;

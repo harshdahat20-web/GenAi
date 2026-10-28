@@ -12,9 +12,9 @@ const LABEL = {
   resume: "Resume AI",
 };
 const TOTALS = [
-  ["notes", "Notes", "#d97757"],
-  ["flashcards", "Flashcards", "#6a9bcc"],
-  ["quizzes", "Quizzes", "#8fa86f"],
+  ["notes", "Notes", "#ffffff"],
+  ["flashcards", "Flashcards", "#a3a3a3"],
+  ["quizzes", "Quizzes", "#666666"],
 ];
 const H3 = "mb-3 font-display text-[15px] font-semibold text-cya";
 const day = (d) =>
@@ -69,7 +69,7 @@ export default function StatsPanel() {
               <span className="text-xs text-mute">{d.requests}</span>
               <div className="flex w-full flex-1 items-end">
                 <div
-                  className="w-full rounded-t-md bg-[linear-gradient(180deg,#f0a98a,#d97757)]"
+                  className="w-full rounded-t-md bg-[linear-gradient(180deg,#ffffff,#737373)]"
                   style={{
                     height: `${Math.max(3, (d.requests / max) * 100)}%`,
                     opacity: d.requests ? 1 : 0.25,
@@ -81,7 +81,6 @@ export default function StatsPanel() {
           ))}
         </div>
       </section>
-
       <div className="grid gap-6 md:grid-cols-2">
         <section>
           <h3 className={H3}>Usage by feature</h3>

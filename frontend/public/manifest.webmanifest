@@ -3,7 +3,14 @@
   "short_name": "GenAI",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#171615",
-  "theme_color": "#171615",
-  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }

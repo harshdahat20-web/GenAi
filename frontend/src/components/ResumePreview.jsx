@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const ACCENT = "#b4532a";
+const ACCENT = "#262626";
 const text = (v) => (v || "").trim();
 const lines = (arr) => (arr || []).map(text).filter(Boolean);
 const dates = (i) =>
@@ -59,7 +59,7 @@ export function ResumeSheet({ resume, fluid = false }) {
 
   return (
     <article
-      className={`bg-white text-[#1a1a1a] ${modern ? "font-sans" : "font-display"} ${size}`}
+      className={`bg-white text-[#1a1a1a] ${modern ? "font-sans" : "font-serif"} ${size}`}
     >
       <header
         className={modern ? "border-l-4 pl-4" : "text-center"}
